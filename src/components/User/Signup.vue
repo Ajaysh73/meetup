@@ -68,11 +68,23 @@ export default {
   computed: {
     comparePasswords () {
       return this.password !== this.confirmpassword ? 'Password do not match' : ''
+    },
+    user () {
+      return this.$store.getters.user
+    }
+  },
+  watch: {
+    user (value) {
+      console.log(this.user)
+      if (value !== null && value !== undefined) {
+        this.$router.push('/')
+      }
     }
   },
   methods: {
     onSignUp () {
-      console.log({email: this.email, password: this.password, confirmpassword: this.confirmpassword})
+      console.log({email: this.email, password: this.password})
+      this.$store.dispatch('signUserUp', {email: this.email, password: this.password})
     }
   }
 }
