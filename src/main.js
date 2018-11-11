@@ -5,14 +5,17 @@ import router from './router'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import theme from './theme'
+import 'vuetify/src/stylus/app.styl'
 import { store } from './store'
 import DateFilter from './filters/date'
+import AlertCmp from './shared/Alert.vue'
 
 Vue.use(Vuetify, {theme})
 
 Vue.config.productionTip = false
 
 Vue.filter('date', DateFilter)
+Vue.component('app-alert', AlertCmp)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
