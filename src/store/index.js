@@ -49,7 +49,7 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
-    loadedMeetups ({commit}) {
+    loadMeetups ({commit}) {
       commit('setLoading', true)
       firebase.database().ref('meetups').once('value')
       .then((data) => {
@@ -138,9 +138,15 @@ export const store = new Vuex.Store({
       },
       clearError ({commit}) {
         commit('clearError')
+      },
+      autoSignIn ({commit}, payload) {
+        commit('setUser', {id: payload.uid, registeredMeetups: []})
+      },
+      logout ({commit}) {
+        firebase.auth().signOut()
+        commit('setUser', null)
       }
     },
-
   getters: {
       loadedMeetups (state) {
           return state.loadedMeetups.sort((meetupA, meetupB) => {
