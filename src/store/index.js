@@ -1,3 +1,4 @@
+/* eslint-disable spaced-comment */
 /* eslint-disable indent */
 import Vue from 'vue'
 import Vuex from 'vuex'
@@ -76,21 +77,43 @@ export const store = new Vuex.Store({
       const meetup = {
         title: payload.title,
         location: payload.location,
-        imageUrl: payload.imageUrl,
         description: payload.description,
         date: payload.date.toISOString()
       }
+      let key
+      let imageUrl
       firebase.database().ref('meetups').push(meetup)
       .then((data) => {
-        const key = data.key
+        key = data.key
+        return key
+      })
+      .then(key => {
+        // also in my payload object i stored an image file
+        //so here i am uploading the image to the firebase storage
+        const fileName = payload.image.name
+        const extension = fileName.slice(fileName.lastIndexOf('.'))
+        return firebase.storage().ref('meetup/' + key + '.' + extension).put(payload.image)
+     })
+     .then(uploadTaskSnapshot => {
+        return uploadTaskSnapshot.ref.getDownloadURL()
+     })
+     .then(imageUrl => {
+       console.log(imageUrl)
+       console.log(key)
+       return firebase.database().ref('meetups').child(key).update({imageUrl: imageUrl})
+     })
+      .then(() => {
         commit('createMeetup', {
           ...meetup,
-          id: key})
+          imageUrl: imageUrl,
+          id: key
+        })
       })
       .catch((error) => {
         console.log(error)
       })
-    },
+    // Reach out to firebase and store it
+  },
     signUserUp ({commit}, payload) {
       commit('setLoading', true)
       commit('clearError')

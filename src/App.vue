@@ -11,8 +11,8 @@
           </v-list-tile-action>
             <v-list-tile-content>{{menu.title}}</v-list-tile-content>
         </v-list-tile>
-        <v-list-tile v-if="userIsAuthenticated">
-          <v-list-tile-action @click="onLogout">
+        <v-list-tile v-if="userIsAuthenticated" @click="onLogout">
+          <v-list-tile-action>
             <v-icon>exit_to_app</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>LogOut</v-list-tile-content>
