@@ -29,6 +29,9 @@
                     </v-card-media>
                     <v-card-text >
                         <div class="info--text mb-2"  id="InfoText">{{meetup.date | date}} - {{meetup.title}} </div>
+                        <div> <app-edit-meetup-date-dialog :meetup="meetup"></app-edit-meetup-date-dialog>
+                         <app-edit-meetup-time-dialog :meetup="meetup"></app-edit-meetup-time-dialog>
+                         </div>
                         <div  id="AboutText">
                         {{meetup.description}}
                         </div>             
