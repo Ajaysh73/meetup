@@ -1,18 +1,20 @@
 <template>
-    <v-dialog width="350px" persistent v-model="editDialog"> 
-        <v-btn accent slot="activator">Edit date</v-btn>
-        <v-card>
-            <v-container>
-                <v-layout row wrap>
-                    <v-flex xs12>
-                        <v-card-title>Edit Meetup Date</v-card-title>
-                    </v-flex>
-                </v-layout>
-                <v-divider></v-divider>
+    <v-dialog width="350px" persistent v-model="editDialog">
+    <v-btn accent slot="activator">
+      Edit Date
+    </v-btn>
+    <v-card>
+      <v-container>
+        <v-layout row wrap>
+          <v-flex xs12>
+            <v-card-title>Edit Meetup Date</v-card-title>
+          </v-flex>
+        </v-layout>
+        <v-divider></v-divider>
                 <v-layout row warp>
                     <v-flex xs12>
                         <v-date-picker v-model="editableTime" style="width: 100%" actions>
-                            <template scope="{save, cancel}">
+                            <template>
                                 <v-btn class="blue--text darken-1"
                                 flat
                                 @click.native="editDialog = false">Close</v-btn>
@@ -38,6 +40,23 @@ export default {
       editableTime: null
     }
   },
+  computed: {
+    userIsRegistered () {
+      if (
+        this.$store.getters.user.registeredMeetups == null ||
+        this.$store.getters.user.registeredMeetups === undefined
+      ) {
+        return false
+      } else {
+        return (
+          this.$store.getters.user.registeredMeetups.findIndex(meetupId => {
+            return meetupId === this.meetupId
+          }) >= 0
+        )
+      }
+    }
+  },
+
   methods: {
     onSaveChanges () {
       const newDate = new Date(this.meetup.date)

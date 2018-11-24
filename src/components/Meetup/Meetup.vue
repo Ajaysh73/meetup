@@ -29,8 +29,8 @@
                     </v-card-media>
                     <v-card-text >
                         <div class="info--text mb-2"  id="InfoText">{{meetup.date | date}} - {{meetup.title}} </div>
-                        <div> <app-edit-meetup-date-dialog :meetup="meetup"></app-edit-meetup-date-dialog>
-                         <app-edit-meetup-time-dialog :meetup="meetup"></app-edit-meetup-time-dialog>
+                        <div> <app-edit-meetup-date-dialog :meetup="meetup" v-if="userIsCreator"></app-edit-meetup-date-dialog>
+                         <app-edit-meetup-time-dialog :meetup="meetup" v-if="userIsCreator"></app-edit-meetup-time-dialog>
                          </div>
                         <div  id="AboutText">
                         {{meetup.description}}
@@ -38,7 +38,9 @@
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn large flat class="primary">Register</v-btn>
+                        <app-meetup-register-dialog
+                        :meetupId="meetup.id"
+                        v-if="userIsAuthenticated && !userIsCreator"></app-meetup-register-dialog>
                     </v-card-actions>
                 </v-card>
             </v-flex>

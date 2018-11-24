@@ -12,7 +12,7 @@
                 <v-layout row warp>
                     <v-flex xs12>
                         <v-time-picker v-model="editableTime" style="width: 100%" actions>
-                            <template scope="{save, cancel}">
+                            <template scope>
                                 <v-btn class="blue--text darken-1"
                                 flat
                                 @click.native="editDialog = false">Close</v-btn>

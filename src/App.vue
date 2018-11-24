@@ -43,7 +43,7 @@
     </v-toolbar>
     
    <main>
-     <router-view></router-view>
+     <router-view :key="$route.fullPath" ref="router"></router-view>
    </main>
   </v-app>
 </template>
